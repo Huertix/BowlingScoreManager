@@ -11,6 +11,7 @@ public class GameController {
     private int[] framesScore;
     private int state;
     private List<Frame> frameList;
+    private int lastIndexUpdated;
 
     public GameController(){
         initGame();
@@ -19,7 +20,9 @@ public class GameController {
     private void initGame(){
         currentFrame = 1;
         frameList = new ArrayList<Frame>();
+        framesScore = new int[TOTAL_FRAMES];
         state = FIRST_THROW_STATE;
+        lastIndexUpdated = 0;
     }
 
     public void newThrow(int pins){
@@ -56,6 +59,7 @@ public class GameController {
         }
     }
 
+    // Update scores in each frame
     private void updateFrames(){
         int index = currentFrame - 1;
         for( int i = 0; i < frameList.size(); i++ ) {
@@ -64,15 +68,21 @@ public class GameController {
         }
     }
 
+    // update accumulative score
     private void updateScores(){
+        if(lastIndexUpdated > 0){
+            for ( int i = lastIndexUpdated; i < frameList.size(); i++){
+                framesScore[i] = framesScore[lastIndexUpdated - 1] + frameList.get(i).getScore();
+                lastIndexUpdated++;
+            }
 
+        } else{
+            framesScore[lastIndexUpdated] = frameList.get(lastIndexUpdated).getScore();
+            lastIndexUpdated++;
+        }
     }
 
-    public int getScoreAtFrame(int frame){
-        int index = frame -1;
-        Frame f = frameList.get(index);
-        return f.getScore();
-    }
+    public int getScoreAtFrame(int frame){ return framesScore[frame -1]; }
 
     public Frame getFrame(int frame){ return frameList.get(frame - 1); }
 
