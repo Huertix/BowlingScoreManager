@@ -36,7 +36,7 @@ public class GameController {
                         state = SECOND_THROW_STATE;
                     else
                         currentFrame++;
-                                            
+
                     frameList.add(f);
                     break;
 
@@ -57,7 +57,11 @@ public class GameController {
     }
 
     private void updateFrames(){
-
+        int index = currentFrame - 1;
+        for( int i = 0; i < frameList.size(); i++ ) {
+            Frame f = frameList.get(i);
+            f.setScore(f.getThrow1() + f.getThrow2());
+        }
     }
 
     private void updateScores(){
