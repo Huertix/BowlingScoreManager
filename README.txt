@@ -1,4 +1,4 @@
-olve the proposed problem  I have decided to do it from a OOP perspective. For this porpouse, I have used Java and JUnit which led me to a TDD (Test-Driven Development) resolution.  
+To resolve the proposed problem  I have decided to do it from a OOP perspective. For this porpouse, I have used Java and JUnit which led me to a TDD (Test-Driven Development) resolution.  
 
 Phase 1: Define steps to achive the resolution:
 
