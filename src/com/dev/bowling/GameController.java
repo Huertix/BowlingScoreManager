@@ -143,4 +143,17 @@ public class GameController {
     public boolean gameIsOver(){
         return currentFrame > TOTAL_FRAMES;
     }
+
+    public void printScores(){
+        for (int i = 0; i < frameList.size(); i++){
+            System.out.println("---- FRAME " + (i + 1) + "----");
+            System.out.println("roll 1: " + frameList.get(i).getThrow1() );
+            System.out.println("roll 2: " + frameList.get(i).getThrow2() );
+            if(i > 8){
+                System.out.println("roll 3:" + frameList.get(i).getExtraThrow());
+            }
+            System.out.println("Score: " + framesScore[i]);
+        }
+        System.out.println("*********************************");
+    }
 }
