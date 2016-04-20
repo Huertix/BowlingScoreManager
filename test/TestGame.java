@@ -2,126 +2,51 @@ import com.dev.bowling.GameController;
 import junit.framework.TestCase;
 import org.junit.Test;
 
-public class TestGame extends TestCase {
+public class TestGame extends TestCase{
+
 
     @Test
-    public void testInit(){
+    public void testInit() {
         GameController gc = new GameController();
-        gc.newThrow(3);
-        gc.newThrow(4);
-        assertEquals("Score Frame1 = 7", 7, gc.getFrame(1).getScore());
-        assertFalse("Game is not over", gc.gameIsOver());
-        gc.newThrow(2);
-        gc.newThrow(1);
-        assertEquals("Score Frame2 = 3", 3, gc.getFrame(2).getScore());
-        assertEquals("TotalScore in Frame2 = 10", 10, gc.getScoreAtFrame(2));
-        gc.newThrow(3);
-        gc.newThrow(4);
-        assertEquals("Score Frame3 = 7", 7, gc.getFrame(3).getScore());
-        assertEquals("TotalScore in Frame3 = 17", 17, gc.getScoreAtFrame(3));
-        gc.newThrow(5);
-        gc.newThrow(4);
-        assertEquals("Score Frame4 = 9", 9, gc.getFrame(4).getScore());
-        assertFalse("Game is not over", gc.gameIsOver());
-        gc.newThrow(2);
-        gc.newThrow(4);
-        assertEquals("Score Frame5 = 6", 6, gc.getFrame(5).getScore());
-        gc.newThrow(3);
-        gc.newThrow(4);
-        assertEquals("Score Frame6 = 7", 7, gc.getFrame(6).getScore());
-        assertFalse("Game is not over", gc.gameIsOver());
-        gc.newThrow(3);
-        gc.newThrow(3);
-        assertEquals("Score Frame7 = 6", 6, gc.getFrame(7).getScore());
-        assertEquals("TotalScore in Frame6 = 39", 39, gc.getScoreAtFrame(6));
-        gc.newThrow(1);
-        gc.newThrow(4);
-        assertEquals("Score Frame8 = 5", 5, gc.getFrame(8).getScore());
-        gc.newThrow(0);
-        gc.newThrow(4);
-        assertEquals("Score Frame9 = 4", 4, gc.getFrame(9).getScore());
-        assertFalse("Game is not over", gc.gameIsOver());
-        gc.newThrow(3);
-        gc.newThrow(4);
-        assertEquals("TotalScore in Frame10 = 61", 61, gc.getScoreAtFrame(10));
-        assertTrue("Game is over", gc.gameIsOver());
+        int[] balls = {3, 4, 2, 1, 3, 4, 5, 4, 2, 4, 3, 4, 3, 3, 1, 4, 0, 4, 3, 4};
+        int[] scoreInFrame = {7, 3, 7, 9, 6, 7, 6, 5, 4, 7};
+        int[] accumulativeScore = {7, 10, 17, 26, 32, 39, 45, 50, 54, 61};
+        testGame(gc, balls, scoreInFrame, accumulativeScore);
     }
 
     @Test
     public void testWithStrikes(){
         GameController gc = new GameController();
-        gc.newThrow(5);
-        gc.newThrow(2);
-        assertEquals("Score Frame1 = 7", 7, gc.getScoreAtFrame(1));
-        gc.newThrow(8);
-        gc.newThrow(1);
-        assertEquals("Score Frame1 = 7", 7, gc.getScoreAtFrame(1));
-        assertEquals("Score Frame2 = 16", 16, gc.getScoreAtFrame(2));
-        gc.newThrow(10);
-        assertEquals("Score Frame1 = 7", 7, gc.getScoreAtFrame(1));
-        assertEquals("Score Frame2 = 16", 16, gc.getScoreAtFrame(2));
-        gc.newThrow(3);
-        gc.newThrow(2);
-        assertEquals("Score Frame1 = 7", 7, gc.getScoreAtFrame(1));
-        assertEquals("Score Frame2 = 16", 16, gc.getScoreAtFrame(2));
-        assertEquals("Score Frame3 = 31", 31, gc.getScoreAtFrame(3));
-        assertEquals("Score Frame4 = 36", 36, gc.getScoreAtFrame(4));
-        gc.newThrow(10);
-        assertEquals("Score Frame5 = 0", 0, gc.getScoreAtFrame(5));
-        gc.newThrow(10);
-        assertEquals("Score Frame6 = 0", 0, gc.getScoreAtFrame(6));
-        gc.newThrow(1);
-        gc.newThrow(6);
-        assertEquals("Score Frame5 = 57", 57, gc.getScoreAtFrame(5));
-        assertEquals("Score Frame6 = 74", 74, gc.getScoreAtFrame(6));
-        assertEquals("Score Frame7 = 81", 81, gc.getScoreAtFrame(7));
-        gc.newThrow(10);
-        assertEquals("Score Frame8 = 0", 0, gc.getScoreAtFrame(8));
-        gc.newThrow(2);
-        gc.newThrow(6);
-        assertEquals("Score Frame8 = 99", 99, gc.getScoreAtFrame(8));
-        assertEquals("Score Frame9 = 107", 107, gc.getScoreAtFrame(9));
-        gc.newThrow(4);
-        gc.newThrow(5);
-        assertEquals("Score Frame10 = 116", 116, gc.getScoreAtFrame(10));
-        assertTrue("Game is over", gc.gameIsOver());
+        int[] balls = {5, 2, 8, 1, 10, 3, 2, 10, 10, 1, 6, 10, 2, 6, 4, 5};
+        int[] scoreInFrame = {7, 9, 15, 5, 21, 17, 7, 18, 8, 9};
+        int[] accumulativeScore = {7, 16, 31, 36, 57, 74, 81, 99, 107, 116};
+        testGame(gc, balls, scoreInFrame, accumulativeScore);
     }
+
 
     @Test
     public void testWithStrikesAndSpares(){
         GameController gc = new GameController();
-        gc.newThrow(5);
-        gc.newThrow(2);
-        assertEquals("Score Frame1= 7", 7, gc.getScoreAtFrame(1));
-        gc.newThrow(8);
-        gc.newThrow(2);
-        assertEquals("Score Frame1 = 7", 7, gc.getScoreAtFrame(1));
-        gc.newThrow(10);
-        assertEquals("Score Frame1 = 7", 7, gc.getScoreAtFrame(1));
-        gc.newThrow(3);
-        gc.newThrow(2);
-        assertEquals("Score Frame1 = 7", 7, gc.getScoreAtFrame(1));
-        assertEquals("Score Frame2 = 27", 27, gc.getScoreAtFrame(2));
-        assertEquals("Score Frame3 = 42", 42, gc.getScoreAtFrame(3));
-        assertEquals("Score Frame4 = 47", 47, gc.getScoreAtFrame(4));
-        gc.newThrow(4);
-        gc.newThrow(6);
-        gc.newThrow(5);
-        gc.newThrow(5);
-        gc.newThrow(1);
-        gc.newThrow(6);
-        assertEquals("Score Frame5 = 62", 62, gc.getScoreAtFrame(5));
-        assertEquals("Score Frame6 = 73",73, gc.getScoreAtFrame(6));
-        assertEquals("Score Frame7 = 80", 80, gc.getScoreAtFrame(7));
-        gc.newThrow(10);
-        assertEquals("Score Frame8 = 0", 0, gc.getScoreAtFrame(8));
-        gc.newThrow(2);
-        gc.newThrow(6);
-        assertEquals("Score Frame8 = 98", 98, gc.getScoreAtFrame(8));
-        assertEquals("Score Frame9 = 106", 106, gc.getScoreAtFrame(9));
-        gc.newThrow(4);
-        gc.newThrow(3);
-        assertEquals("Score Frame10 = 113", 113, gc.getScoreAtFrame(10));
-        assertTrue("Game is over", gc.gameIsOver());
+        int[] balls = {5, 2, 8, 2, 10, 3, 2, 4, 6, 5, 5, 1, 6, 10, 2, 6, 4, 3};
+        int[] scoreInFrame = {7, 20, 15, 5, 15, 11, 7, 18, 8, 7};
+        int[] accumulativeScore = {7, 27, 42, 47, 62, 73, 80, 98, 106, 113};
+        testGame(gc, balls, scoreInFrame, accumulativeScore);
+    }
+    
+
+    // Helper method.
+    private void testGame(GameController gc, int[] balls, int[] scoreInFrame, int[] accumulativeScore){
+
+        for( int i = 0; i < balls.length; i++){
+            gc.newThrow(balls[i]);
+        }
+        for( int i = 0; i < scoreInFrame.length; i++){
+            assertEquals("Score in Frame " + (i + 1 ) +" != "+ scoreInFrame[i],
+                    scoreInFrame[i], gc.getFrame(i + 1).getScore());
+        }
+        for( int i = 0; i < accumulativeScore.length; i++){
+            assertEquals("Total score in Frame " + (i + 1 ) +" != "+ accumulativeScore[i],
+                    accumulativeScore [i], gc.getScoreAtFrame(i + 1));
+        }
     }
 }
