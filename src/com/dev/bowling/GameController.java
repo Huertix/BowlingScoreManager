@@ -23,11 +23,41 @@ public class GameController {
     }
 
     public void newThrow(int pins){
+        if(pins > 10){
+            System.out.println("Number of pins wrong");
+            return;
+        }
+        if(!gameIsOver()){
+            switch (state){
+                case FIRST_THROW_STATE:
+                    Frame f = new Frame();
+                    f.setThrow1(pins);
+                    if(pins < 10)
+                        state = SECOND_THROW_STATE;
+                    else
+                        currentFrame++;
+                                            
+                    frameList.add(f);
+                    break;
 
+            case SECOND_THROW_STATE:
+                f = frameList.get(currentFrame - 1);
+                if(f.getThrow1() + pins > 10){
+                    System.out.println("Number of pins wrong");
+                    return;
+                }
+                f.setThrow2(pins);
+                state = FIRST_THROW_STATE;
+                currentFrame++;
+                updateFrames();
+                updateScores();
+                break;
+            }
+        }
     }
 
     private void updateFrames(){
-        
+
     }
 
     private void updateScores(){
