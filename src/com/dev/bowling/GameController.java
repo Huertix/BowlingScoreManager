@@ -26,6 +26,10 @@ public class GameController {
 
     }
 
+    private void updateFrames(){
+        
+    }
+
     private void updateScores(){
 
     }
@@ -35,6 +39,8 @@ public class GameController {
         Frame f = frameList.get(index);
         return f.getScore();
     }
+
+    public Frame getFrame(int frame){ return frameList.get(frame - 1); }
 
     public boolean gameIsOver(){
         return currentFrame > TOTAL_FRAMES;

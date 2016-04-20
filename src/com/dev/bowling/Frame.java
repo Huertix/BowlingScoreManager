@@ -33,6 +33,5 @@ public class Frame {
 
     public void setScore(int score){
         this.score = score;
-        isScorePending = false;
     }
 }
