@@ -37,24 +37,32 @@ public class GameController {
                     f.setThrow1(pins);
                     if(pins < 10)
                         state = SECOND_THROW_STATE;
-                    else
+                    else{
+                        f.setStrike(true);
                         currentFrame++;
-
+                    }
                     frameList.add(f);
                     break;
 
-            case SECOND_THROW_STATE:
-                f = frameList.get(currentFrame - 1);
-                if(f.getThrow1() + pins > 10){
-                    System.out.println("Number of pins wrong");
-                    return;
-                }
-                f.setThrow2(pins);
-                state = FIRST_THROW_STATE;
-                currentFrame++;
-                updateFrames();
-                updateScores();
-                break;
+                case SECOND_THROW_STATE:
+                    f = frameList.get(currentFrame - 1);
+                    if(f.getThrow1() + pins > 10){
+                        System.out.println("Number of pins wrong");
+                        return;
+                    }
+                    f.setThrow2(pins);
+                    if (f.getThrow1() + pins >= 10){
+                        f.setSpare(true);
+                            state = FIRST_THROW_STATE;
+                            currentFrame++;
+
+                    } else{
+                        state = FIRST_THROW_STATE;
+                        currentFrame++;
+                        updateFrames();
+                        updateScores();
+                    }
+                    break;
             }
         }
     }
@@ -62,9 +70,35 @@ public class GameController {
     // Update scores in each frame
     private void updateFrames(){
         int index = currentFrame - 1;
-        for( int i = 0; i < frameList.size(); i++ ) {
+        for( int i = 0; i < frameList.size(); i++ ){
             Frame f = frameList.get(i);
-            f.setScore(f.getThrow1() + f.getThrow2());
+            if(f.isStrike()){
+                if(index - i > 2){
+                    Frame f1 = frameList.get(i + 1);
+                    Frame f2 = null;
+                    if( f1.getThrow2() == null){
+                        f2 = frameList.get(i + 2);
+                        f.setScore(10 + f1.getThrow1() + f2.getThrow1());
+                    } else {
+                        f.setScore(10 + f1.getThrow1() + f1.getThrow2());
+                    }
+                } else if(index - i > 1){
+                    Frame f1 = frameList.get(i + 1);
+                    f.setScore(10 + f1.getThrow1() + f1.getThrow2());
+                } else {
+                    f.setScore(10 + f.getThrow1() + f.getThrow2());
+                }
+            } else if(f.isSpare()){
+                if(index - i > 0){
+                    Frame f1 = frameList.get(i + 1);
+                    f.setScore(10 + f1.getThrow1());
+                } else {
+                    f.setScore(10 + f.getThrow1());
+                }
+            } else{
+                if( f.isScorePending() )
+                    f.setScore(f.getThrow1() + f.getThrow2() + f.getExtraThrow());
+            }
         }
     }
 
