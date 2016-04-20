@@ -32,7 +32,34 @@ public class TestGame extends TestCase{
         int[] accumulativeScore = {7, 27, 42, 47, 62, 73, 80, 98, 106, 113};
         testGame(gc, balls, scoreInFrame, accumulativeScore);
     }
-    
+
+    @Test
+    public void testLastFrameStrike(){
+        GameController gc = new GameController();
+        int[] balls = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 10, 10, 1};
+        int[] scoreInFrame = {2, 2, 2, 2, 2, 2, 2, 2, 2, 21};
+        int[] accumulativeScore = {2, 4, 6, 8, 10, 12, 14, 16, 18, 39};
+        testGame(gc, balls, scoreInFrame, accumulativeScore);
+    }
+
+    @Test
+    public void testLastFrameSpare(){
+        GameController gc = new GameController();
+        int[] balls = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 2};
+        int[] scoreInFrame = {2, 2, 2, 2, 2, 2, 2, 2, 2, 12};
+        int[] accumulativeScore = {2, 4, 6, 8, 10, 12, 14, 16, 18, 30};
+        testGame(gc, balls, scoreInFrame, accumulativeScore);
+    }
+
+    @Test
+    public void testLastFrameStrikesAndSpares(){
+        GameController gc = new GameController();
+        int[] balls = {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 10};
+        int[] scoreInFrame = {2, 2, 2, 2, 2, 2, 2, 2, 2, 20};
+        int[] accumulativeScore = {2, 4, 6, 8, 10, 12, 14, 16, 18, 38};
+        testGame(gc, balls, scoreInFrame, accumulativeScore);
+    }
+
 
     // Helper method.
     private void testGame(GameController gc, int[] balls, int[] scoreInFrame, int[] accumulativeScore){
