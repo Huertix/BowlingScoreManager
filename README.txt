@@ -1,4 +1,4 @@
-olve the problem proposed, I have decided to resolve it from a OOP perspective. For this porpouse, I have used Java and JUnit which was driven me to a TDD (Test-Driven Development) resolution.  
+olve the proposed problem  I have decided to do it from a OOP perspective. For this porpouse, I have used Java and JUnit which led me to a TDD (Test-Driven Development) resolution.  
 
 Phase 1: Define steps to achive the resolution:
 
@@ -11,7 +11,7 @@ Phase 1: Define steps to achive the resolution:
 
     2 step:
         - Introduce the strike concept.
-            + Check if firts throw was 10.
+            + Check if first throw was 10.
             + Jump to the next frame.
 
     3 step:
@@ -25,9 +25,10 @@ Phase 1: Define steps to achive the resolution:
 
 Phase 2: Define the tests for each step in phase 1;
 
-Phase 3: Coding the resolution based in pass the test previously defined.
+Phase 3: Code based in test succesful.
 
-Phase 4: Debuging to achive the resolution, refactoring and improve the code.
+Phase 4: Debuge to achieve the resolution, refactoring and improving the code. 
+
 
 I have defined two classes + the main class which is the entry point.
 
@@ -48,8 +49,8 @@ I have defined two classes + the main class which is the entry point.
 
     Frame which is responsible of:
         - Register throws.
-        - Check if it has an Strike.
-        - Check if it has an Spare.
+        - Check if it is a Strike.
+        - Check if it has a Spare.
         - Save the score from all throws in this frame.
 
         This class was designed with variables, getters and setters.
@@ -65,4 +66,4 @@ I have defined two classes + the main class which is the entry point.
         }
 
 
-In order to try the application, you can run the test defined with JUnit or run the jar file usign as argument a throws list ( E.g: java -jar BowlingGame.jar 5 2 8 1 10 3 2 10 10 1 6 10 2 6 10 4 5 )   
+In order to try the application, you can run the test defined with JUnit or run the jar file using as argument a throw list ( E.g: java -jar BowlingGame.jar 5 2 8 1 10 3 2 10 10 1 6 10 2 6 10 4 5 )   
