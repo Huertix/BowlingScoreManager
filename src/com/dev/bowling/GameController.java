@@ -7,6 +7,8 @@ public class GameController {
     private static final int TOTAL_FRAMES = 10;
     private static final int FIRST_THROW_STATE = 1;
     private static final int SECOND_THROW_STATE = 2;
+    private static final int EXTRA_THROW_STATE = 3;
+    private boolean isFinalFrame;
     private int currentFrame;
     private int[] framesScore;
     private int state;
@@ -38,24 +40,31 @@ public class GameController {
                     if(pins < 10)
                         state = SECOND_THROW_STATE;
                     else{
-                        f.setStrike(true);
-                        currentFrame++;
+                        if(isFinalFrame)
+                            state = SECOND_THROW_STATE;
+                        else {
+                            f.setStrike(true);
+                            currentFrame++;
+                        }
                     }
                     frameList.add(f);
                     break;
 
                 case SECOND_THROW_STATE:
                     f = frameList.get(currentFrame - 1);
-                    if(f.getThrow1() + pins > 10){
+                    if(f.getThrow1() + pins > 10 && !isFinalFrame){
                         System.out.println("Number of pins wrong");
                         return;
                     }
                     f.setThrow2(pins);
                     if (f.getThrow1() + pins >= 10){
-                        f.setSpare(true);
+                        if(isFinalFrame)
+                            state = EXTRA_THROW_STATE;
+                        else{
+                            f.setSpare(true);
                             state = FIRST_THROW_STATE;
                             currentFrame++;
-
+                        }
                     } else{
                         state = FIRST_THROW_STATE;
                         currentFrame++;
@@ -63,7 +72,17 @@ public class GameController {
                         updateScores();
                     }
                     break;
+
+                case EXTRA_THROW_STATE:
+                    f = frameList.get(currentFrame - 1);
+                    f.setExtraThrow(pins);
+                    currentFrame++;
+                    updateFrames();
+                    updateScores();
+                    break;
             }
+            if(currentFrame > 9)
+                isFinalFrame = true;
         }
     }
 
